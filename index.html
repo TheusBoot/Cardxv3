@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CardX v2 — Tweet por URL</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<!-- ══ SETUP BANNER ══ -->
+<div id="setup-banner">
+  <span>⚡ Para funcionar corretamente, rode o servidor local:
+    <code>npm install express node-fetch@2</code> depois
+    <code>node server.js</code> e acesse
+    <code>http://localhost:3000</code>
+  </span>
+  <button class="banner-close" onclick="this.parentElement.classList.add('hidden')" title="Fechar">✕</button>
+</div>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="logo">Card<em>X</em><span class="logo-tag">v2</span></div>
+  <div class="url-bar">
+    <input type="text" id="inp-url"
+      placeholder="Cole a URL do tweet · x.com/usuario/status/ID"
+      onkeydown="if(event.key==='Enter'&&!this.disabled) fetchTweet()" />
+    <button class="btn-fetch" id="btn-fetch" onclick="fetchTweet()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Buscar
+    </button>
+  </div>
+</header>
+
+<div class="body-wrap">
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sec">Perfil</div>
+    <div class="field"><label>Nome</label><input type="text" id="s-name" oninput="renderCard()" /></div>
+    <div class="field"><label>Handle</label><input type="text" id="s-handle" oninput="renderCard()" /></div>
+    <div class="toggle-row">Verificado
+      <label class="toggle"><input type="checkbox" id="s-verified" onchange="renderCard()"><span class="sl"></span></label>
+    </div>
+    <div class="field"><label>URL do avatar</label><input type="text" id="s-avatar" oninput="renderCard()" placeholder="auto-preenchido" /></div>
+
+    <div class="sec">Conteúdo</div>
+    <div class="field"><label>Texto</label><textarea id="s-text" oninput="renderCard()"></textarea></div>
+
+    <div class="sec">Metadados</div>
+    <div class="field"><label>Data e hora</label><input type="text" id="s-time" oninput="renderCard()" /></div>
+    <div class="row2">
+      <div class="field"><label>Curtidas</label><input type="text" id="s-likes" oninput="renderCard()" /></div>
+      <div class="field"><label>Retweets</label><input type="text" id="s-rt" oninput="renderCard()" /></div>
+    </div>
+    <div class="field"><label>Visualizações</label><input type="text" id="s-views" oninput="renderCard()" /></div>
+
+    <div class="sec">Aparência</div>
+    <div class="toggle-row">Modo escuro
+      <label class="toggle"><input type="checkbox" id="s-dark" onchange="renderCard()"><span class="sl"></span></label>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:6px">Cor do avatar (quando sem foto)</div>
+    <div class="color-row">
+      <div class="cswatch active" data-c="#1d9bf0" style="background:#1d9bf0" onclick="setAvatarColor(this)"></div>
+      <div class="cswatch" data-c="#e0245e" style="background:#e0245e" onclick="setAvatarColor(this)"></div>
+      <div class="cswatch" data-c="#17bf63" style="background:#17bf63" onclick="setAvatarColor(this)"></div>
+      <div class="cswatch" data-c="#794bc4" style="background:#794bc4" onclick="setAvatarColor(this)"></div>
+      <div class="cswatch" data-c="#f5a623" style="background:#f5a623" onclick="setAvatarColor(this)"></div>
+      <div class="cswatch" data-c="#ff6b35" style="background:#ff6b35" onclick="setAvatarColor(this)"></div>
+      <div class="cswatch" data-c="#444" style="background:#555" onclick="setAvatarColor(this)"></div>
+    </div>
+
+    <div class="sec">Exportar</div>
+
+    <div class="field" id="vid-format-wrap" style="display:none">
+      <label>Formato do vídeo</label>
+      <select id="s-vid-format">
+        <option value="webm">WebM (menor tamanho)</option>
+        <option value="mp4">MP4 (mais compatível)</option>
+      </select>
+    </div>
+
+    <div class="actions">
+      <button class="btn accent" id="btn-png"  onclick="downloadPNG()"        disabled>⬇ Baixar PNG</button>
+      <button class="btn green"  id="btn-vid"  onclick="startRecordVideo()"   disabled style="display:none">🎬 Gravar Vídeo + Áudio</button>
+      <button class="btn"        id="btn-stop" onclick="stopRecording()"      disabled style="display:none">⏹ Parar gravação</button>
+      <button class="btn"        id="btn-copy" onclick="copyPNG()"            disabled>📋 Copiar imagem</button>
+    </div>
+    <div id="status"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="main-area">
+    <div id="empty-state">
+      <div class="big-icon">🔗</div>
+      <p>Cole a URL de um tweet público acima e clique em <strong>Buscar</strong>.<br/>
+         O card será gerado com foto de perfil, texto e mídia.</p>
+    </div>
+
+    <div id="error-msg"></div>
+
+    <div id="skeleton">
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="sk" style="width:48px;height:48px;border-radius:50%;flex-shrink:0"></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px">
+          <div class="sk" style="height:13px;width:52%"></div>
+          <div class="sk" style="height:11px;width:34%"></div>
+        </div>
+      </div>
+      <div class="sk" style="height:13px;width:100%;margin-top:8px"></div>
+      <div class="sk" style="height:13px;width:86%"></div>
+      <div class="sk" style="height:13px;width:70%"></div>
+      <div class="sk" style="height:190px;border-radius:12px;margin-top:4px"></div>
+    </div>
+
+    <div id="tweet-card">
+      <div class="tw-header">
+        <div class="tw-avatar" id="c-avatar"></div>
+        <div class="tw-user">
+          <div class="tw-name"   id="c-name"></div>
+          <div class="tw-handle" id="c-handle"></div>
+        </div>
+        <div class="tw-logo">𝕏</div>
+      </div>
+      <div class="tw-text"       id="c-text"></div>
+      <div class="tw-media-wrap" id="c-media"></div>
+      <div class="tw-time"       id="c-time"></div>
+      <hr  class="tw-divider" />
+      <div class="tw-stats"      id="c-stats"></div>
+    </div>
+
+    <div id="rec-bar-wrap">
+      <div id="rec-bar-bg"><div id="rec-bar-fill"></div></div>
+      <div id="rec-info"></div>
+    </div>
+
+    <div class="plabel" id="bottom-hint" style="display:none">Ajuste os campos ao lado para edições manuais</div>
+  </main>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
