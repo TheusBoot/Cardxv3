@@ -1,6 +1,15 @@
-# 🐦 CardX — Tweet Card Generator
+# 🐦 CardX v3 — Tweet Card Generator
 
-> Gere prints estilizados de tweets reais diretamente pela URL — com suporte a imagens, vídeos e exportação em PNG, WebM e MP4.
+> Gere cards visuais estilizados de tweets reais a partir de qualquer URL do X (Twitter) — com suporte a imagens, vídeos e exportação em PNG, WebM e MP4.
+
+<div align="center">
+
+![Node.js](https://img.shields.io/badge/Node.js-16%2B-339933?style=flat-square&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.x-000000?style=flat-square&logo=express&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)
+
+</div>
 
 ---
 
@@ -11,37 +20,39 @@
 - [Preview](#-preview)
 - [Tecnologias](#-tecnologias)
 - [Pré-requisitos](#-pré-requisitos)
-- [Instalação e Uso](#-instalação-e-uso)
-- [Estrutura de Arquivos](#-estrutura-de-arquivos)
+- [Como Rodar](#-como-rodar)
+- [Estrutura de Pastas](#-estrutura-de-pastas)
 - [Como Funciona](#-como-funciona)
-- [Rotas do Servidor](#-rotas-do-servidor)
+- [Rotas da API](#-rotas-da-api)
 - [Limitações Conhecidas](#-limitações-conhecidas)
-- [Perguntas Frequentes](#-perguntas-frequentes)
+- [FAQ](#-faq)
 - [Licença](#-licença)
 
 ---
 
 ## 📌 Sobre o Projeto
 
-O **CardX** é uma ferramenta local que permite gerar cards visuais de tweets reais a partir da URL. Cole o link de qualquer tweet público e o sistema busca automaticamente o nome do usuário, foto de perfil, texto, imagens e vídeos — montando um card fiel ao layout do X (antigo Twitter).
+O **CardX** é uma ferramenta local que gera cards visuais de tweets reais a partir da URL. Cole o link de qualquer tweet público e o sistema busca automaticamente o nome do usuário, foto de perfil, texto, imagens e vídeos — montando um card fiel ao layout do X (antigo Twitter).
 
-O projeto nasceu da necessidade de criar prints de tweets de forma rápida, bonita e offline, sem depender de ferramentas externas com limitações de plano.
+> O projeto nasceu da necessidade de criar prints de tweets de forma rápida, bonita e sem depender de ferramentas externas com limitações de plano.
 
 ---
 
 ## ✨ Funcionalidades
 
-- 🔗 **Importação por URL** — cole qualquer link `x.com/...` ou `twitter.com/...`
-- 👤 **Dados reais** — nome, @handle, foto de perfil e badge de verificado
-- 📝 **Texto completo** com @menções e #hashtags clicáveis
-- 🖼️ **Suporte a imagens** — foto única ou grade de até 4 fotos
-- 🎬 **Suporte a vídeos** — reprodução no card + gravação com áudio
-- 🌗 **Modo claro e escuro** (X Light / X Dark)
-- 🎨 **Personalização** — cor do avatar, edição manual de todos os campos
-- 📥 **Exportação em PNG** — alta resolução (3x scale)
-- 🎥 **Exportação em vídeo** — WebM ou MP4, com áudio sincronizado
-- 📋 **Copiar imagem** direto para a área de transferência
-- 📱 **Layout responsivo** — funciona em telas menores
+| Feature | Descrição |
+|--------|-----------|
+| 🔗 **Importação por URL** | Cole qualquer link `x.com/...` ou `twitter.com/...` |
+| 👤 **Dados reais** | Nome, @handle, foto de perfil e badge de verificado |
+| 📝 **Texto completo** | Com @menções e #hashtags renderizados corretamente |
+| 🖼️ **Suporte a imagens** | Foto única ou grade de até 4 fotos |
+| 🎬 **Suporte a vídeos** | Reprodução no card + gravação com áudio sincronizado |
+| 🌗 **Modo claro/escuro** | X Light e X Dark |
+| 🎨 **Personalização** | Cor do avatar, edição manual de todos os campos |
+| 📥 **Exportação PNG** | Alta resolução (3× scale) |
+| 🎥 **Exportação em vídeo** | WebM ou MP4, com áudio |
+| 📋 **Copiar imagem** | Direto para área de transferência |
+| 📱 **Layout responsivo** | Funciona em telas menores |
 
 ---
 
@@ -71,8 +82,8 @@ O projeto nasceu da necessidade de criar prints de tweets de forma rápida, boni
 | Camada | Tecnologia |
 |--------|-----------|
 | Frontend | HTML5, CSS3, JavaScript (ES2022) |
-| Backend | Node.js, Express |
-| Fetch HTTP | node-fetch@2 |
+| Backend | Node.js + Express |
+| HTTP Fetch | node-fetch@2 |
 | Captura de tela | html2canvas 1.4.1 |
 | Gravação de vídeo | MediaRecorder API + Canvas captureStream |
 | APIs externas | fxtwitter API + Twitter Syndication API |
@@ -81,27 +92,33 @@ O projeto nasceu da necessidade de criar prints de tweets de forma rápida, boni
 
 ## 📦 Pré-requisitos
 
-- [Node.js](https://nodejs.org/) versão 16 ou superior
-- npm (já vem com o Node.js)
-- Navegador moderno: **Chrome 109+** ou **Firefox 113+**
-  - Para exportar MP4: Chrome 130+
+- **[Node.js](https://nodejs.org/)** v16 ou superior
+- **npm** (já incluído no Node.js)
+- Navegador moderno:
+  - Chrome 109+ (MP4: Chrome 130+)
+  - Firefox 113+
 
 ---
 
-## 🚀 Instalação e Uso
+## 🚀 Como Rodar
 
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/cardx.git
-cd cardx
+git clone https://github.com/TheusBoot/Cardxv3.git
+cd Cardxv3
 ```
 
 ### 2. Instale as dependências
 
 ```bash
-npm install express node-fetch@2
+npm install
 ```
+
+> Caso não haja `package.json`, instale manualmente:
+> ```bash
+> npm install express node-fetch@2
+> ```
 
 ### 3. Inicie o servidor
 
@@ -110,6 +127,7 @@ node server.js
 ```
 
 Você verá no terminal:
+
 ```
 ✅ CardX Server rodando em http://localhost:3000
 ```
@@ -120,58 +138,128 @@ Você verá no terminal:
 http://localhost:3000
 ```
 
-> ⚠️ **Importante:** abra sempre via `http://localhost:3000`, nunca abrindo o arquivo HTML diretamente pelo Explorer. O servidor local é necessário para resolver o CORS das APIs do Twitter.
+> ⚠️ **Importante:** acesse **sempre** via `http://localhost:3000`. Abrir o `index.html` diretamente pelo Explorer não funciona — o servidor é necessário para o proxy CORS das APIs do Twitter.
 
-### 5. Use
+### 5. Usando o CardX
 
 1. Cole a URL do tweet no campo superior
-2. Clique em **Buscar** (ou pressione Enter)
+2. Clique em **Buscar** (ou pressione `Enter`)
 3. O card é gerado automaticamente
-4. Ajuste nome, texto, cores ou modo escuro pelo painel lateral
+4. Ajuste nome, texto, cores e modo pelo painel lateral
 5. Clique em **Baixar PNG** ou **Gravar Vídeo + Áudio**
 
 ---
 
-## 📁 Estrutura de Arquivos
+## 📁 Estrutura de Pastas
+
+Estrutura atual do projeto e estrutura recomendada para organização futura:
+
+### Atual
 
 ```
-cardx/
-│
-├── index.html      # Estrutura HTML — layout, sidebar, card e skeleton
-├── style.css       # Estilos — tema escuro, card do tweet, responsivo
-├── app.js          # Lógica — fetch, render, gravação de vídeo, exportação
-├── server.js       # Servidor Node.js — proxy CORS para APIs do Twitter
-│
+Cardxv3/
+├── OLD/                # Versões anteriores (pode ser removida)
+├── index.html          # Estrutura HTML da interface
+├── style.css           # Estilos globais
+├── app.js              # Entry point principal
+├── compose.js          # Composição e montagem do card
+├── export.js           # Exportação PNG e vídeo
+├── formats.js          # Formatação de dados (data, números)
+├── helpers.js          # Funções utilitárias
+├── preview.js          # Lógica de preview do card
+├── server.js           # Servidor Node.js / proxy CORS
+├── LICENSE
 └── README.md
 ```
 
-### Responsabilidades de cada arquivo
+### ✅ Recomendada
 
-**`index.html`**
-Contém toda a estrutura da interface: header com barra de URL, sidebar com os campos editáveis e o painel de exportação, área principal com o card do tweet, skeleton de loading e mensagens de erro.
+```
+Cardxv3/
+├── public/                   # Arquivos servidos pelo Express
+│   ├── js/                   # Módulos JavaScript do frontend
+│   │   ├── app.js            # Entry point
+│   │   ├── compose.js        # Composição do card
+│   │   ├── export.js         # Exportação PNG e vídeo
+│   │   ├── formats.js        # Formatação de dados
+│   │   ├── helpers.js        # Utilitários
+│   │   └── preview.js        # Preview
+│   ├── css/
+│   │   └── style.css
+│   └── index.html
+├── server.js                 # Servidor Node.js (raiz)
+├── package.json
+├── .gitignore
+├── LICENSE
+└── README.md
+```
 
-**`style.css`**
-Define o tema escuro da aplicação, o layout em grid de duas colunas, os estilos do card do tweet (modo claro e escuro), a animação de shimmer do skeleton, a barra de progresso da gravação e os breakpoints responsivos.
-
-**`app.js`**
-Contém toda a lógica JavaScript dividida em módulos funcionais:
-- **Estado global** — variáveis compartilhadas entre funções
-- **API** — funções para montar as URLs do proxy e das APIs externas
-- **Fetch** — `tryFxTwitter`, `trySyndication`, `fetchTweet` com timeout e cancelamento
-- **Render** — `renderCard`, `renderMedia` para montar o card no DOM
-- **Gravação** — `startRecordVideo`, `stopRecording`, `saveRecording` com captura de áudio
-- **Exportação PNG** — `getCardCanvas`, `downloadPNG`, `copyPNG` com pré-carregamento de imagens como blob
-- **Helpers** — `esc`, `fmtNum`, `formatDate`, `renderText`, `setStatus`, etc.
-
-**`server.js`**
-Servidor Express que resolve o problema de CORS ao agir como intermediário entre o browser e as APIs externas do Twitter. Expõe três rotas de proxy.
+> Depois de reorganizar, lembre de atualizar os `<script src="...">` no `index.html` para apontar para `js/nome-do-arquivo.js` e o `server.js` para servir a pasta `public/` como estática.
 
 ---
 
-## 🔌 Rotas do Servidor
+## ⚙️ Como Funciona
+
+### Busca de dados
+
+O sistema usa duas APIs em cascata para garantir resiliência:
+
+```
+URL do tweet
+    │
+    ▼
+┌──────────────────────────┐
+│  1. fxtwitter API        │  ← tenta primeiro
+│  api.fxtwitter.com       │
+└──────────┬───────────────┘
+           │ falhou?
+           ▼
+┌──────────────────────────┐
+│  2. Twitter Syndication  │  ← fallback
+│  cdn.syndication.twimg   │
+└──────────┬───────────────┘
+           │
+           ▼
+    dados normalizados
+    → nome, avatar, texto,
+      fotos, vídeos, stats
+```
+
+### Exportação PNG
+
+Para evitar o erro `canvas tainted` por imagens cross-origin:
+
+1. Imagens do card são pré-carregadas via `/proxy/media` como `blob:` URLs
+2. `blob:` URLs são same-origin → o canvas as aceita sem contaminar
+3. `html2canvas` renderiza o card com `useCORS: true`
+4. `toDataURL()` funciona sem `SecurityError`
+5. Imagens originais são restauradas após o export
+
+### Gravação de vídeo com áudio
+
+```
+videoEl (proxy same-origin)
+    │
+    ├── captureStream() → AudioTrack ──────┐
+    │                                       │
+recCanvas.captureStream() → VideoTrack ────┤
+                                            ▼
+                                   MediaRecorder(combinedStream)
+                                            │
+                                    drawFrame() a 30fps
+                                    ┌─ card estático (bgCanvas)
+                                    └─ frames do vídeo em tempo real
+                                            │
+                                    Blob(chunks) → download
+```
+
+---
+
+## 🔌 Rotas da API
 
 ### `GET /proxy/fxtwitter`
-Proxy para a API pública do fxtwitter, que retorna dados estruturados do tweet.
+
+Proxy para a fxtwitter API. Retorna dados estruturados do tweet.
 
 | Parâmetro | Tipo | Descrição |
 |-----------|------|-----------|
@@ -185,7 +273,8 @@ GET /proxy/fxtwitter?user=elonmusk&id=1234567890
 ---
 
 ### `GET /proxy/syndication`
-Proxy para a API de syndication oficial do Twitter (a mesma usada pelo botão "Embed Tweet"). Usada como fallback quando o fxtwitter falha.
+
+Proxy para a API oficial de syndication do Twitter. Usado como fallback.
 
 | Parâmetro | Tipo | Descrição |
 |-----------|------|-----------|
@@ -198,74 +287,18 @@ GET /proxy/syndication?id=1234567890
 ---
 
 ### `GET /proxy/media`
-Proxy para imagens e vídeos hospedados nos servidores do Twitter (`pbs.twimg.com`, `video.twimg.com`). Resolve o CORS para que o canvas possa desenhar a mídia sem ficar "tainted". Suporta Range Requests para streaming de vídeo.
+
+Proxy para imagens e vídeos dos servidores do Twitter. Resolve o CORS para que o canvas possa renderizar a mídia. Suporta Range Requests para streaming.
 
 | Parâmetro | Tipo | Descrição |
 |-----------|------|-----------|
-| `url` | string | URL completa da mídia (deve ser de domínio twimg.com) |
+| `url` | string | URL completa da mídia (domínio `twimg.com`) |
 
 ```
 GET /proxy/media?url=https://pbs.twimg.com/media/exemplo.jpg
 ```
 
-> Por segurança, apenas URLs dos domínios `twimg.com` são permitidas. Qualquer outro domínio retorna `403 Forbidden`.
-
----
-
-## ⚙️ Como Funciona
-
-### Busca de dados do tweet
-
-O sistema usa duas APIs em cascata:
-
-```
-URL do tweet
-    │
-    ▼
-┌─────────────────────────┐
-│  1. fxtwitter API       │  ← tenta primeiro
-│  api.fxtwitter.com      │
-└─────────┬───────────────┘
-          │ falhou?
-          ▼
-┌─────────────────────────┐
-│  2. Twitter Syndication │  ← fallback
-│  cdn.syndication.twimg  │
-└─────────┬───────────────┘
-          │
-          ▼
-    dados normalizados
-    → nome, avatar, texto,
-      fotos, vídeos, stats
-```
-
-### Exportação PNG
-
-Para evitar o erro de "canvas tainted" causado por imagens cross-origin:
-
-1. Todas as imagens do card são pré-carregadas pelo `/proxy/media` como `blob:` URLs
-2. As `blob:` URLs são same-origin → o canvas as aceita sem contaminar
-3. O `html2canvas` renderiza o card limpo com `useCORS: true`
-4. O `toDataURL()` funciona sem `SecurityError`
-5. As imagens originais são restauradas após o export
-
-### Gravação de vídeo com áudio
-
-```
-videoEl (vídeo original, same-origin via proxy)
-    │
-    ├── captureStream() → AudioTrack  ──────────┐
-    │                                            │
-recCanvas.captureStream() → VideoTrack ──────────┤
-                                                  ▼
-                                         MediaRecorder(combinedStream)
-                                                  │
-                                          drawFrame() a 30fps
-                                          ┌─ bgCanvas (card estático)
-                                          └─ videoEl frames em tempo real
-                                                  │
-                                          Blob(chunks) → download
-```
+> Por segurança, somente domínios `twimg.com` são permitidos. Outros retornam `403 Forbidden`.
 
 ---
 
@@ -273,44 +306,43 @@ recCanvas.captureStream() → VideoTrack ──────────┤
 
 | Limitação | Motivo |
 |-----------|--------|
-| Só funciona com tweets públicos | APIs não retornam dados de contas protegidas |
-| Requer servidor local (`node server.js`) | Sem o proxy, o browser bloqueia requisições cross-origin para as APIs do Twitter |
-| Exportação MP4 requer Chrome 130+ | Versões mais antigas não suportam `video/mp4` no MediaRecorder |
-| Vídeos de GIF animado podem não ter áudio | GIFs do Twitter são vídeos sem trilha de áudio |
-| Stats (curtidas, views) podem estar desatualizados | As APIs retornam os dados no momento da busca |
+| Apenas tweets públicos | APIs não retornam dados de contas protegidas |
+| Requer `node server.js` | Sem o proxy, o browser bloqueia requests cross-origin |
+| MP4 requer Chrome 130+ | Versões mais antigas não suportam `video/mp4` no MediaRecorder |
+| GIFs animados sem áudio | GIFs do Twitter são vídeos sem trilha de áudio |
+| Stats podem estar defasados | As APIs retornam os dados no momento da busca |
 
 ---
 
-## ❓ Perguntas Frequentes
+## ❓ FAQ
 
 **O card não carrega — aparece "Failed to fetch"**
-Certifique-se de estar acessando via `http://localhost:3000` e não abrindo o `index.html` diretamente pelo Explorer/Finder.
+Certifique-se de estar acessando via `http://localhost:3000` e não abrindo o `index.html` diretamente.
 
 **O vídeo exportado ficou sem áudio**
-Isso acontece quando o tweet original é um GIF (que não tem trilha de áudio) ou quando o navegador bloqueia a captura de áudio. Tente reproduzir o vídeo no card antes de gravar.
+Isso acontece quando o tweet original é um GIF (sem trilha de áudio) ou quando o navegador bloqueia a captura. Reproduza o vídeo no card antes de gravar.
 
 **O PNG ficou com imagens em branco**
-Isso pode acontecer se as imagens ainda não carregaram. Aguarde o card renderizar completamente antes de exportar.
+Aguarde o card renderizar completamente antes de exportar. As imagens precisam estar totalmente carregadas.
 
 **O botão "Gravar Vídeo" não aparece**
-O botão só aparece quando o tweet contém um vídeo. Para tweets com apenas fotos ou texto, só o PNG está disponível.
+O botão só aparece em tweets com vídeo. Para tweets com foto ou texto, somente o PNG está disponível.
 
 **Posso mudar a porta 3000?**
-Sim, edite a linha `const PORT = 3000;` no `server.js` para qualquer porta disponível.
+Sim. Edite a linha `const PORT = 3000;` no `server.js`.
 
 ---
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está sob a licença **Apache 2.0**. Veja o arquivo [LICENSE](./LICENSE) para mais detalhes.
 
 ---
 
 <div align="center">
-  <p>Feito com ☕ e JavaScript</p>
-  <p>
-    <a href="https://github.com/seu-usuario/cardx/issues">Reportar Bug</a>
-    ·
-    <a href="https://github.com/seu-usuario/cardx/issues">Sugerir Feature</a>
-  </p>
+
+Feito com ☕ e JavaScript por [TheusBoot](https://github.com/TheusBoot)
+
+[🐛 Reportar Bug](https://github.com/TheusBoot/Cardxv3/issues) · [💡 Sugerir Feature](https://github.com/TheusBoot/Cardxv3/issues)
+
 </div>
