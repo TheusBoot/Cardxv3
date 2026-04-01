@@ -1,0 +1,7 @@
+# Crie o arquivo .gitignore na raiz
+#cat > .gitignore << 'EOF'
+#node_modules/
+#.env
+#.DS_Store
+#*.log
+#EOF

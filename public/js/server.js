@@ -16,7 +16,7 @@ const app  = express();
 const PORT = 3000;
 
 // Servir o HTML na raiz
-app.use(express.static(path.dirname(__filename)));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Headers CORS para todas as rotas /proxy
 app.use('/proxy', (req, res, next) => {

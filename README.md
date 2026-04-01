@@ -60,7 +60,7 @@ O **CardX** é uma ferramenta local que gera cards visuais de tweets reais a par
 
 ```
 ┌─────────────────────────────────────────┐
-│  [foto]  Nome do Usuário ✓              │
+│  [foto]  Nome do Usuário ✓              │  
 │          @handle                    𝕏   │
 │                                         │
 │  Texto do tweet com @menção e #hashtag  │
@@ -72,7 +72,7 @@ O **CardX** é uma ferramenta local que gera cards visuais de tweets reais a par
 │  3:45 PM · 25 mar 2026                  │
 │  ─────────────────────────────────────  │
 │  🔁 312 Retweets  ❤️ 2,4K Curtidas     │
-└─────────────────────────────────────────┘
+└─────────────────────────────────────────┘ 
 ```
 
 ---
