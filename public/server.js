@@ -16,7 +16,7 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // Servir o HTML na raiz
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 // Headers CORS para todas as rotas /proxy
 app.use('/proxy', (req, res, next) => {
@@ -116,5 +116,5 @@ app.get('/proxy/media', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`\n✅ CardX Server rodando em http://localhost:${PORT}`);
-  console.log(`   Abra http://localhost:${PORT}/tweet_fetcher_v2.html no navegador\n`);
+  console.log(`   Abra http://localhost:${PORT} no navegador\n`);
 });
